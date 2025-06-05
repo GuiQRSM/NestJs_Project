@@ -8,9 +8,9 @@ import {
   Query,
 } from '@nestjs/common';
 
-@Controller()
+@Controller('/users')
 export class UsersControllers {
-  @Get('/users')
+  @Get('/')
   findAll(@Query('id') id: number) {
     if (id) {
       return `Method findAll with ${id}!`;
@@ -18,22 +18,22 @@ export class UsersControllers {
     return 'Method findAll!';
   }
 
-  @Get('/users/:id')
+  @Get('/:id')
   findById(@Param('id') id: number) {
     return id;
   }
 
-  @Post('/users')
+  @Post('/')
   create() {
     return 'created user!';
   }
 
-  @Put('/users/:id')
+  @Put('/:id')
   update(@Param('id') id: number) {
     return `Updsted user of id:${id}`;
   }
 
-  @Delete('/users/:id')
+  @Delete('/:id')
   delete(@Param('id') id: number) {
     return `Deleted user od id:${id}`;
   }
