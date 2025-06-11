@@ -1,6 +1,6 @@
 import {
+  Body,
   Controller,
-  DefaultValuePipe,
   Delete,
   Get,
   Param,
@@ -8,20 +8,19 @@ import {
   Patch,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
+import { CreateTesteInpuDTO } from 'src/DTOs/TesteDTO/CreateTesteInput.dto';
+import { PatchTesteInputDTO } from 'src/DTOs/TesteDTO/PatchTesteInput.dto';
+import { UpdateTesteInputDTO } from 'src/DTOs/TesteDTO/UpdateTesteInput.dto';
 
-@Controller('/test')
-export class TestController {
+@Controller('/testes')
+export class TesteController {
   @Get('/')
-  findAll(
-    @Query('id', new DefaultValuePipe(1), new ParseIntPipe()) id: number,
-  ) {
-    console.log(typeof id);
+  findAll(@Param('id', new ParseIntPipe()) id: number) {
     if (id) {
-      return `Return this methos findAll! with id:${id}!`;
+      return `method findAll() with id:${id}`;
     }
-    return 'Return this methos findAll!';
+    return 'method findAll()';
   }
 
   @Get('/:id')
@@ -30,22 +29,22 @@ export class TestController {
   }
 
   @Post('/')
-  create() {
-    return 'Created a user';
+  create(@Body() body: CreateTesteInpuDTO) {
+    return body;
   }
 
   @Put('/:id')
-  update(@Param('id') id: number) {
-    return `Updated this user with id:${id}!`;
+  update(@Param('id') id: number, @Body() body: UpdateTesteInputDTO) {
+    return body;
   }
 
   @Patch('/:id')
-  patchUpdate(@Param('id') id: number) {
-    return `Updated partielly this user with id:${id}!`;
+  updatePartial(@Param('id') id: number, @Body() body: PatchTesteInputDTO) {
+    return body;
   }
 
   @Delete('/:id')
   delete(@Param('id') id: number) {
-    return `Deleted user with id:${id}!`;
+    return `delete the user with id: ${id}`;
   }
 }

@@ -10,6 +10,8 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { CreateUserInputDTO } from 'src/DTOs/UserDTO/CreateUserInput.dto';
+import { UpdateUserInputDTO } from 'src/DTOs/UserDTO/UpdateUserInput.dto';
 
 @Controller('/users')
 export class UsersControllers {
@@ -27,13 +29,13 @@ export class UsersControllers {
   }
 
   @Post('/')
-  create(@Body() body: void) {
+  create(@Body() body: CreateUserInputDTO) {
     return body;
   }
 
   @Put('/:id')
-  update(@Param('id') id: number) {
-    return `Updsted user of id:${id}`;
+  update(@Param('id') id: number, @Body() body: UpdateUserInputDTO) {
+    return body;
   }
 
   @Delete('/:id')
