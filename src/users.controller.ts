@@ -1,8 +1,10 @@
 import {
   Controller,
+  DefaultValuePipe,
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Post,
   Put,
   Query,
@@ -11,7 +13,7 @@ import {
 @Controller('/users')
 export class UsersControllers {
   @Get('/')
-  findAll(@Query('id') id: number) {
+  findAll(@Query('id', new DefaultValuePipe(1), ParseIntPipe) id: number) {
     if (id) {
       return `Method findAll with ${id}!`;
     }
