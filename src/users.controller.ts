@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   DefaultValuePipe,
   Delete,
@@ -26,8 +27,8 @@ export class UsersControllers {
   }
 
   @Post('/')
-  create() {
-    return 'created user!';
+  create(@Body() body: void) {
+    return body;
   }
 
   @Put('/:id')
