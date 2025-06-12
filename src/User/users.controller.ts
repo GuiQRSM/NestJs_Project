@@ -73,14 +73,15 @@ export class UsersControllers {
     const user = this.users.find((user) => user.id === id);
     if (!user) throw new NotFoundException();
     this.users.map((user) => {
-      if (user?.id === id) {
+      if (user.id === id) {
         return { ...user, ...body };
       }
-      return {
-        ...user,
-        ...body,
-      };
+      return user;
     });
+    return {
+      ...user,
+      ...body,
+    };
   }
 
   @Delete('/:id')
