@@ -4,6 +4,7 @@ import {
   DefaultValuePipe,
   Delete,
   Get,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -15,27 +16,71 @@ import { UpdateUserInputDTO } from 'src/DTOs/UserDTO/UpdateUserInput.dto';
 
 @Controller('/users')
 export class UsersControllers {
+  private users = [
+    {
+      id: 1,
+      name: 'Jamil',
+      email: 'jam@gmail.com',
+      password: '1234',
+    },
+    {
+      id: 2,
+      name: 'Cleo',
+      email: 'cleo@gmail.com',
+      password: '4321',
+    },
+    {
+      id: 3,
+      name: 'Caio',
+      email: 'caio@gmail.com',
+      password: '8583',
+    },
+  ];
+
   @Get('/')
-  findAll(@Query('id', new DefaultValuePipe(1), ParseIntPipe) id: number) {
+  findAll(@Query('id', new DefaultValuePipe(0), ParseIntPipe) id: 0) {
     if (id) {
-      return `Method findAll with ${id}!`;
+      const users = this.users.find((user) => user.id === id);
+      const user = [users].filter((user) => user != null);
+      return user;
     }
-    return 'Method findAll!';
+    return this.users;
   }
 
   @Get('/:id')
-  findById(@Param('id') id: number) {
-    return id;
+  findById(@Param('id', ParseIntPipe) id: number) {
+    const user = this.users.find((user) => user.id === id);
+    if (user) return user;
+    throw new NotFoundException();
   }
 
   @Post('/')
   create(@Body() body: CreateUserInputDTO) {
-    return body;
+    const lastUser = this.users[this.users.length - 1];
+    const newUsers = {
+      id: lastUser.id + 1,
+      ...body,
+    };
+    this.users.push(newUsers);
+    return newUsers;
   }
 
   @Put('/:id')
-  update(@Param('id') id: number, @Body() body: UpdateUserInputDTO) {
-    return body;
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateUserInputDTO,
+  ) {
+    const user = this.users.find((user) => user.id === id);
+    if (!user) throw new NotFoundException();
+    this.users.map((user) => {
+      if (user?.id === id) {
+        return { ...user, ...body };
+      }
+      return {
+        ...user,
+        ...body,
+      };
+    });
   }
 
   @Delete('/:id')

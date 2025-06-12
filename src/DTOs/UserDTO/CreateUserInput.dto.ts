@@ -10,5 +10,5 @@ export class CreateUserInputDTO {
 
   @IsString()
   @IsNotEmpty()
-  passsword: string;
+  password: string;
 }
