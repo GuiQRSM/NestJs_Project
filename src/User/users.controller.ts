@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   DefaultValuePipe,
@@ -56,11 +57,19 @@ export class UsersControllers {
 
   @Post('/')
   create(@Body() body: CreateUserInputDTO) {
+    //analisa se email já é cadastrado!
+    const user = this.users.find((user) => user.email === body.email);
+    if (user) {
+      throw new BadRequestException('Email já cadastrado!');
+    }
+    // 59: Acessa o ultimo elemento de this.users
     const lastUser = this.users[this.users.length - 1];
+    // cria um novo objeto  de usuario
     const newUsers = {
       id: lastUser.id + 1,
       ...body,
     };
+    //Adiciona o novo usuário ao final da lista this.users
     this.users.push(newUsers);
     return newUsers;
   }
@@ -72,6 +81,7 @@ export class UsersControllers {
   ) {
     const user = this.users.find((user) => user.id === id);
     if (!user) throw new NotFoundException();
+    //O map() está sendo usado para criar um novo array com os dados atualizados.
     this.users.map((user) => {
       if (user.id === id) {
         return { ...user, ...body };
@@ -85,7 +95,10 @@ export class UsersControllers {
   }
 
   @Delete('/:id')
-  delete(@Param('id') id: number) {
-    return `Deleted user od id:${id}`;
+  delete(@Param('id', ParseIntPipe) id: number) {
+    const user = this.users.find((user) => user.id !== id);
+    if (!user) throw new NotFoundException();
+    this.users = this.users.filter((user) => user.id !== id);
+    return { message: 'User deleted!' };
   }
 }
