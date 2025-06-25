@@ -7,6 +7,10 @@ export class CreateMockInputDTO {
 
   @IsString()
   @IsNotEmpty()
+  age: string;
+
+  @IsString()
+  @IsNotEmpty()
   email: string;
 
   @IsString()

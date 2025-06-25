@@ -12,11 +12,11 @@ import {
 } from '@nestjs/common';
 import { CreateUserInputDTO } from 'src/DTOs/UserDTO/CreateUserInput.dto';
 import { UpdateUserInputDTO } from 'src/DTOs/UserDTO/UpdateUserInput.dto';
-import { UserService } from 'src/user.service';
+import { UserService } from 'src/services/user.service';
 
 @Controller('/users')
 export class UsersControllers {
-  private usersService = new UserService();
+  constructor(private usersService: UserService) {}
 
   @Get('/')
   findAll(@Query('id', new DefaultValuePipe(0), ParseIntPipe) id: 0) {

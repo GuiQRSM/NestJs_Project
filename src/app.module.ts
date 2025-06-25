@@ -3,7 +3,9 @@ import { AppService } from './app.service';
 import { UsersControllers } from 'src/User/users.controller';
 import { AppController } from 'src/app.controller';
 import { TesteController } from 'src/Teste/test.controller';
+import { UserService } from 'src/services/user.service';
 import { MockController } from 'src/Teste/mock.controller';
+import { MockService } from 'src/services/mock.service';
 
 @Module({
   imports: [],
@@ -13,6 +15,6 @@ import { MockController } from 'src/Teste/mock.controller';
     TesteController,
     MockController,
   ],
-  providers: [AppService],
+  providers: [AppService, UserService, MockService],
 })
 export class AppModule {}

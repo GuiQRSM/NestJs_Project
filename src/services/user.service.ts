@@ -1,7 +1,12 @@
-import { BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserInputDTO } from 'src/DTOs/UserDTO/CreateUserInput.dto';
 import { UpdateUserInputDTO } from 'src/DTOs/UserDTO/UpdateUserInput.dto';
 
+@Injectable()
 export class UserService {
   private users = [
     {
