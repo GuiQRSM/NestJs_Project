@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateTesteInpuDTO {
+export class CreateTestInputDTO {
   @IsString()
   @IsNotEmpty()
   name: string;
