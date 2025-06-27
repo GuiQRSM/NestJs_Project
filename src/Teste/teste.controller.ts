@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { CreateTestInputDTO } from 'src/DTOs/TesteDTO/CreateTestInput.dto';
 import { UpdateTestInputDTO } from 'src/DTOs/TesteDTO/UpdateTestInput.dto';
-import { TestService } from 'src/services/test.service';
+import { TestService } from 'src/Teste/test.service';
 
 @Controller('testes')
 export class Testecontroller {
