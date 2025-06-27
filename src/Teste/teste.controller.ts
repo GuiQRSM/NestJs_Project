@@ -10,8 +10,8 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { CreateTestInputDTO } from 'src/DTOs/TesteDTO/CreateTestInput.dto';
-import { UpdateTestInputDTO } from 'src/DTOs/TesteDTO/UpdateTestInput.dto';
+import { CreateTestInputDTO } from 'src/Teste/TesteDTO/CreateTestInput.dto';
+import { UpdateTestInputDTO } from 'src/Teste/TesteDTO/UpdateTestInput.dto';
 import { TestService } from 'src/Teste/test.service';
 
 @Controller('testes')
