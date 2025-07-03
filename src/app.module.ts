@@ -4,9 +4,10 @@ import { AppController } from 'src/app.controller';
 import { UserModule } from 'src/User/user.module';
 import { TestModule } from 'src/Teste/test.module';
 import { MockModule } from 'src/Mock/mock.module';
+import { ClientModule } from 'src/clientes/cliente.module';
 
 @Module({
-  imports: [UserModule, TestModule, MockModule],
+  imports: [UserModule, TestModule, MockModule, ClientModule],
   controllers: [AppController],
   providers: [AppService],
 })
