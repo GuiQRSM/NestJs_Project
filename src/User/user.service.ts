@@ -3,38 +3,20 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { PrismaService } from 'src/prisma.service';
 import { CreateUserInputDTO } from 'src/User/UserDTO/CreateUserInput.dto';
 import { UpdateUserInputDTO } from 'src/User/UserDTO/UpdateUserInput.dto';
 @Injectable()
 export class UserService {
-  private users = [
-    {
-      id: 1,
-      name: 'Jamil',
-      email: 'jam@gmail.com',
-      password: '1234',
-    },
-    {
-      id: 2,
-      name: 'Cleo',
-      email: 'cleo@gmail.com',
-      password: '4321',
-    },
-    {
-      id: 3,
-      name: 'Caio',
-      email: 'caio@gmail.com',
-      password: '8583',
-    },
-  ];
+  constructor(private prisma: PrismaService) {}
 
-  findAll(id: number) {
+  async findAll(id: number) {
     if (id) {
-      const users = this.users.find((user) => user.id === id);
-      const user = [users].filter((user) => user != null);
-      return user;
+      const users = await this.prisma.user.findUnique({ where: { id } });
+      return users;
     }
-    return this.users;
+    const users = await this.prisma.user.findMany();
+    return users;
   }
 
   findById(id: number) {
