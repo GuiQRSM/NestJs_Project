@@ -19,50 +19,43 @@ export class UserService {
     return users;
   }
 
-  findById(id: number) {
-    const user = this.users.find((user) => user.id === id);
+  async findById(id: number) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
     if (user) return user;
     throw new NotFoundException();
   }
 
-  create(body: CreateUserInputDTO) {
+  async create(body: CreateUserInputDTO) {
     //analisa se email já é cadastrado!
-    const user = this.users.find((user) => user.email === body.email);
+    const user = await this.prisma.user.findUnique({
+      where: { email: body.email },
+    });
     if (user) {
       throw new BadRequestException('Email já cadastrado!');
     }
-    // 59: Acessa o ultimo elemento de this.users
-    const lastUser = this.users[this.users.length - 1];
-    // cria um novo objeto  de usuario
-    const newUsers = {
-      id: lastUser.id + 1,
-      ...body,
-    };
-    //Adiciona o novo usuário ao final da lista this.users
-    this.users.push(newUsers);
-    return newUsers;
-  }
-
-  update(id: number, body: UpdateUserInputDTO) {
-    const user = this.users.find((user) => user.id === id);
-    if (!user) throw new NotFoundException();
-    //O map() está sendo usado para criar um novo array com os dados atualizados.
-    this.users.map((user) => {
-      if (user.id === id) {
-        return { ...user, ...body };
-      }
-      return user;
+    //  cria o novo usuário no banco com os dados do body.
+    const newUser = await this.prisma.user.create({
+      data: body,
     });
-    return {
-      ...user,
-      ...body,
-    };
+    //Adiciona o novo usuário ao final da lista this.users
+    return newUser;
   }
 
-  delete(id: number) {
-    const user = this.users.find((user) => user.id !== id);
+  async update(id: number, body: UpdateUserInputDTO) {
+    const user = await this.findById(id);
     if (!user) throw new NotFoundException();
-    this.users = this.users.filter((user) => user.id !== id);
-    return { message: 'User deleted!' };
+    //
+    const alterUser = await this.prisma.user.update({
+      where: { id },
+      data: body,
+    });
+    return alterUser;
+  }
+
+  async delete(id: number) {
+    const user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) throw new NotFoundException();
+    await this.prisma.user.delete({ where: { id } });
+    return { message: 'Usuário deletado!' };
   }
 }
