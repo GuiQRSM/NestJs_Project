@@ -36,14 +36,12 @@ export class ProductsService {
     const product = await this.findById(id);
     if (!product) throw new NotFoundException();
 
-    const data: any = {
-      ...body,
-      price: body.price !== undefined ? Number(body.price) : undefined,
-    };
-
     const alterProduct = await this.prisma.product.update({
       where: { id },
-      data,
+      data: {
+        name: body.name,
+        price: Number(body.price),
+      },
     });
     return alterProduct;
   }

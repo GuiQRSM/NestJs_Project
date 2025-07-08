@@ -20,3 +20,9 @@ model Product {
   price Float
 }
 
+model Cars {
+  id Int @id @default(autoincrement())
+  name String
+  year String
+  price Float
+}
