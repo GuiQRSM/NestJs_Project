@@ -9,10 +9,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { ClientService } from 'src/clientes/cliente.service';
 import { CreateClientInputDTO } from 'src/clientes/DTO/CreateClientInput.dto';
 import { UpdateClientInoutDTO } from 'src/clientes/DTO/UpdateClientInput.dto';
-
+@ApiTags('Client')
 @Controller('/clientes')
 export class clienteController {
   constructor(private clientService: ClientService) {}

@@ -10,10 +10,11 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateTestInputDTO } from 'src/Teste/TesteDTO/CreateTestInput.dto';
 import { UpdateTestInputDTO } from 'src/Teste/TesteDTO/UpdateTestInput.dto';
 import { TestService } from 'src/Teste/test.service';
-
+@ApiTags('Teste')
 @Controller('testes')
 export class Testecontroller {
   constructor(private testService: TestService) {}

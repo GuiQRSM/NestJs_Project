@@ -11,9 +11,10 @@ import {
   DefaultValuePipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { CreateProductInputDTO } from 'src/products/dto/CreateProductInput.dto';
-import { UpdateProductInputDTO } from 'src/products/dto/UpdateProductInput.dto';
-
+import { CreateProductInputDTO } from 'src/Products/dto/CreateProductInput.dto';
+import { UpdateProductInputDTO } from 'src/Products/dto/UpdateProductInput.dto';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Product')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}

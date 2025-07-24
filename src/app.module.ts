@@ -5,7 +5,7 @@ import { UserModule } from 'src/User/user.module';
 import { TestModule } from 'src/Teste/test.module';
 import { MockModule } from 'src/Mock/mock.module';
 import { ClientModule } from 'src/clientes/cliente.module';
-import { ProductsModule } from './products/products.module';
+import { ProductsModule } from './Products/products.module';
 import { CarsModule } from 'src/cars/cars.module';
 
 @Module({

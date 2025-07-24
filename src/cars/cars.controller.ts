@@ -10,10 +10,11 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CarsService } from 'src/cars/cars.service';
 import { CreateCarInputDTO } from 'src/cars/DTO/CreateCarInput.dto';
 import { UpdateCarInputDTO } from 'src/cars/DTO/UpdateCarInput.dto';
-
+@ApiTags('Cars')
 @Controller('/cars')
 export class CarsController {
   constructor(private carService: CarsService) {}
